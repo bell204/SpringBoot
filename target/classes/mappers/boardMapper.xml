@@ -13,11 +13,8 @@
 
  
 <select id="read" resultType="org.zerock.domain.BoardVO"> 
- select 
-   bno, title, content, writer, regdate
- from 
-   tbl_board 
- where bno = #{bno}
+ select bno, title, content, writer, regdate 
+ from tbl_board 
  </select>
 
  <update id="update">
@@ -37,6 +34,44 @@
 	   tbl_board 
 	 ]]>  
  </select>    
-   
+ 
+ <select id="listPage" resultType="BoardVO">
+	<![CDATA[
+	select 
+	  bno, title, content, writer, regdate 
+	from 
+	  tbl_board 
+	where 1=1
+	and rownum <= 10
+	order by bno desc regdate desc;
+	]]>
+</select>
+	 
+<select id="listCriteria" resultType="BoardVO">
+	 <![CDATA[
+	 select 
+	   bno, title, content, writer, regdate
+	 from 
+	   tbl_board 
+	 where bno > 0 
+	 order by bno desc, regdate desc
+	 limit #{pageStart}, #{perPageNum}
+	 ]]>
+</select>
+
+<select id="countPaging" resultType="int">
+	 <![CDATA[
+	 select 
+	   count(bno) 
+	 from 
+	   tbl_board 
+	 where 
+	   bno > 0 
+	 ]]>
+	</select>
+
+
+  
+  
   
 </mapper>
