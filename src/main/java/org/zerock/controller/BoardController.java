@@ -79,7 +79,7 @@ public class BoardController {
 	  }
 	
 	 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public String delete(@RequestParam("bno") int bno, 
 						 RedirectAttributes rttr) throws Exception {
 
@@ -91,7 +91,7 @@ public class BoardController {
 
 		logger.info("삭제처리, bno = " + bno);
 
-		return "redirect:/zboard/listAll";
+		return "redirect:/board/listAll";
 	}
 
 	 // p296
@@ -114,13 +114,13 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public void updateGET(@RequestParam("bno") int bno, Model model) throws Exception {
 		logger.info("수정페이지로 이동, update get called.../ bno = " + bno);
 		model.addAttribute(service.read(bno));
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String updatePOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
 		logger.info("수정처리, update post BoardVO = " + board.toString());
@@ -128,7 +128,7 @@ public class BoardController {
 		service.update(board);
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		return "redirect:/zboard/listAll";
+		return "redirect:/board/listAll";
 	}
 
 	// p298

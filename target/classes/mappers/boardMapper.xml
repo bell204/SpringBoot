@@ -7,8 +7,8 @@
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
  <insert id="regist">
- insert into tbl_board (title, content, writer) 
- values(#{title},#{content}, #{writer})
+ insert into tbl_board (bno, title, content, writer) 
+ values(seq_bno.NEXTVAL, #{title},#{content}, #{writer})
  </insert>
 
  
