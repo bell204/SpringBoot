@@ -22,28 +22,28 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO read(Integer bno) throws Exception {
-	    return dao.read(bno);
+		return dao.read(bno);
 	}
 
 	@Override
 	public void update(BoardVO board) throws Exception {
-	    dao.update(board);
+		dao.update(board);
 	}
 
 	@Override
 	public void remove(Integer bno) throws Exception {
-	    dao.remove(bno);
+		dao.remove(bno);
 	}
 
 	@Override
 	public List<BoardVO> listAll() throws Exception {
 		return dao.listAll();
 	}
- 
-//	@Override
-//	public int countPaging(Criteria cri) throws Exception {
-//		return dao.countPaging(cri);
-//	}
+
+	// @Override
+	// public int countPaging(Criteria cri) throws Exception {
+	// return dao.countPaging(cri);
+	// }
 
 	@Override
 	public int listCountCriteria(Criteria cri) throws Exception {
@@ -51,11 +51,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Object listCriteria(Criteria cri) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+		return dao.listCriteria(cri);
 	}
-
- 
 
 }

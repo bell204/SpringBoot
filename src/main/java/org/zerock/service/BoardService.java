@@ -13,6 +13,6 @@ public interface BoardService {
 	public List<BoardVO> listAll() throws Exception;
 	public int listCountCriteria(Criteria cri) throws Exception; // p280
 	//public int countPaging(Criteria cri) throws Exception;
-	public Object listCriteria(Criteria cri);
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
  
 }
