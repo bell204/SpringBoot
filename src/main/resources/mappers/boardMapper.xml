@@ -69,7 +69,7 @@
 
 <select id="listSearch" resultType="BoardVO">
 		<![CDATA[  
-		  select * 
+		  select bno, title, content, writer, regdate
 		  from tbl_board 
 		  where bno > 0 
 		]]>  
@@ -78,7 +78,6 @@
 	  
 		<![CDATA[    
 		  order by bno desc
-		  limit #{pageStart}, #{perPageNum}
 		]]>  
 	</select>
 	  
