@@ -84,7 +84,7 @@
 								<td>${boardVO.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardVO.regdate}" /></td>
-								<td><span class="badge bg-red">${boardVO.view_count }</span></td>
+								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
 							</tr>
 
 						</c:forEach>

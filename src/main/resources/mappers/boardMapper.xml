@@ -47,15 +47,7 @@ where bno = #{bno}
 	order by bno desc regdate desc
 	]]>
 </select>
-	 
-<select id="listCriteria" resultType="org.zerock.domain.BoardVO">
-	 <![CDATA[
-	 select 
-	   bno, title, content, writer, regdate
-	 from 
-	   tbl_board 
-	 ]]>
-</select>
+	  
 
 <select id="countPaging" resultType="int">
 	 <![CDATA[
@@ -68,6 +60,7 @@ where bno = #{bno}
 	 ]]>
 	</select>
 
+<!--  조회-->
 <select id="listSearch" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[  
 		  select bno, title, content, writer, regdate
@@ -82,6 +75,7 @@ where bno = #{bno}
 		]]>  
 	</select>
 	  
+	  <!--  페이징 카운트 조회 -->
 	<select id="listSearchCount" resultType="int">
 		<![CDATA[  
 		  select count(bno)  
@@ -92,33 +86,32 @@ where bno = #{bno}
 	  	<include refid="search"></include>
 	 
 	</select>  
-
  
 	<sql id="search">
 	 <if test="searchType != null" > 
 	   <if test="searchType == 't'.toString()">
-	     and title like CONCAT('%', #{keyword}, '%')
+	     and title like '%' || #{keyword} || '%'
 	   </if>
 	   <if test="searchType == 'c'.toString()">
-	     and content like CONCAT('%', #{keyword}, '%')
+	     and content like '%' || #{keyword} || '%'
 	   </if>
 	   <if test="searchType == 'w'.toString()">
-	     and writer like CONCAT('%', #{keyword}, '%')
+	     and writer like '%' || #{keyword} || '%'
 	   </if>     
 	   <if test="searchType == 'tc'.toString()">
-	     and ( title like CONCAT('%', #{keyword}, '%') 
-	     OR content like CONCAT('%', #{keyword}, '%'))
+	     and ( title like '%' ||  #{keyword} || '%'  
+	     OR content like '%' ||  #{keyword} || '%')
 	   </if>        
 	   <if test="searchType == 'cw'.toString()">
-	     and ( content like CONCAT('%', #{keyword}, '%') 
-	     OR writer like CONCAT('%', #{keyword}, '%'))
+	     and ( content like '%' ||  #{keyword} || '%'
+	     OR writer like '%' ||  #{keyword}|| '%')
 	   </if>        
 	   <if test="searchType == 'tcw'.toString()">
-	     and (   title like CONCAT('%', #{keyword}, '%') 
+	     and (   title like '%' ||  #{keyword} || '%'
 	           OR 
-	             content like CONCAT('%', #{keyword}, '%') 
+	             content like '%' ||  #{keyword} || '%'
 	           OR 
-	             writer like CONCAT('%', #{keyword}, '%'))
+	             writer like '%' ||  #{keyword} || '%')
 	   </if>              
 	 </if>  
 	</sql>
