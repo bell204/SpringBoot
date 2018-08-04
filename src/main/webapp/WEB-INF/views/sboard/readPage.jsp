@@ -67,21 +67,21 @@
 		console.log(formObj);
 		
 		$(".btn-warning").on("click", function(){
-			formObj.attr("action", "/sboard/updatePage");
+			formObj.attr("action", "/sboard/modifyPage");
 			formObj.attr("method", "get");		
 			formObj.submit();
 		});
 		
 		$(".btn-danger").on("click", function(){
 			alert("Delete Button clicked...");
-			formObj.attr("action", "/sboard/deletePage");
+			formObj.attr("action", "/sboard/removePage");
 			formObj.submit();
 		});
 		
 		$(".btn-primary").on("click", function(){
 
 			formObj.attr("method", "get");
-			formObj.attr("action", "/sboard/listPage");
+			formObj.attr("action", "/sboard/list"); 
 			formObj.submit();		
 		});
 		

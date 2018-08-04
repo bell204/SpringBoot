@@ -50,7 +50,7 @@ public class SearchBoardController {
 		  model.addAttribute(service.read(bno));
 	  }
 	  
-	  @RequestMapping(value = "/deletePage", method = RequestMethod.POST)
+	  @RequestMapping(value = "/removePage", method = RequestMethod.POST)
 	  public String delete(@RequestParam("bno") int bno, 
 			  				SearchCriteria cri, 
 			  				RedirectAttributes rttr) throws Exception {
@@ -64,10 +64,10 @@ public class SearchBoardController {
 
 	    rttr.addFlashAttribute("msg", "SUCCESS");
 
-	    return "redirect:/sboard/listPage";
+	    return "redirect:/sboard/list";
 	  }
 	  
-	  @RequestMapping(value = "/updatePage", method = RequestMethod.GET)
+	  @RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
 	  public void updatePageGET(int bno, 
 			  					@ModelAttribute("cri") SearchCriteria cri, 
 			  					Model model) throws Exception {
@@ -75,8 +75,8 @@ public class SearchBoardController {
 	    model.addAttribute(service.read(bno));
 	  }  
 
-	  @RequestMapping(value = "/updatePage", method = RequestMethod.POST)
-	  public String updatePagePOST(BoardVO board, 
+	  @RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
+	  public String modifyPagePOST(BoardVO board, 
 			  						SearchCriteria cri, 
 			  						RedirectAttributes rttr) throws Exception {
 
@@ -92,16 +92,16 @@ public class SearchBoardController {
 
 	    logger.info(rttr.toString());
 
-	    return "redirect:/sboard/listPage";
+	    return "redirect:/sboard/list";
 	  }
 
-	  @RequestMapping(value = "/insert", method = RequestMethod.GET)
+	  @RequestMapping(value = "/register", method = RequestMethod.GET)
 	  public void insertGET() throws Exception {
 
 	    logger.info("regist get ...........");
 	  }  
 	  
-	  @RequestMapping(value = "/insert", method = RequestMethod.POST)
+	  @RequestMapping(value = "/register", method = RequestMethod.POST)
 	  public String insertPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
 	    logger.info("regist post ... board = " + board.toString());
@@ -110,7 +110,7 @@ public class SearchBoardController {
 
 	    rttr.addFlashAttribute("msg", "SUCCESS");
 
-	    return "redirect:/sboard/listPage";
+	    return "redirect:/sboard/list";
 	  }
 	  
 	  
