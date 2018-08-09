@@ -38,7 +38,7 @@ public class BoardDAOImpl implements BoardDAO {
 		session.delete(namespace + ".delete", bno);
 	}
 
-	// listAll이 문제.
+	// listAll
 	@Override
 	public List<BoardVO> listAll() throws Exception {
 		return session.selectList(namespace + ".listAll");
@@ -73,6 +73,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int listSearchCount(SearchCriteria cri) throws Exception {
 		return session.selectOne(namespace + ".listSearchCount", cri);
+	}
+	
+	@Override
+	public void addAttach(String fullName) throws Exception {
+		session.insert(namespace+".addAttach", fullName);
 	}
 
 }

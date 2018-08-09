@@ -115,6 +115,11 @@ where bno = #{bno}
 	   </if>              
 	 </if>  
 	</sql>
+	
+	<insert id="addAttach">
+		insert into tbl_attach(full_name, bno) 
+						values (#{fullName}, 시퀀스명.currval)
+	</insert> 
 
   
   

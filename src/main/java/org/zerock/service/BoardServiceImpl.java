@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.SearchCriteria;
@@ -15,10 +16,23 @@ public class BoardServiceImpl implements BoardService {
 
 	@Inject
 	private BoardDAO dao;
-
+ 
+	@Transactional
 	@Override
 	public void regist(BoardVO board) throws Exception {
+		
+		// 게시물 등록
 		dao.regist(board);
+		
+		String[] files = board.getFiles();
+
+		if(files == null) { return; } 
+
+		// 첨부파일의 이름 배열을 이용하여 각각 파일 이름을 데이터베이스에 추가 
+		for (String fileName : files) {
+			dao.addAttach(fileName);
+		}  
+		
 	}
 
 	@Override
