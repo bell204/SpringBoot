@@ -3,40 +3,40 @@
  <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
- <insert id="regist">
- insert into tbl_board (bno, title, content, writer) 
- values(seq_bno.NEXTVAL, #{title},#{content}, #{writer})
- </insert>
+	<insert id="regist">
+		insert into tbl_board (bno, title, content, writer)
+		values(seq_bno.NEXTVAL, #{title},#{content}, #{writer})
+	</insert>
 
- 
-<select id="read" resultType="org.zerock.domain.BoardVO"> 
- select bno, title, content, writer, regdate 
- from tbl_board 
-where bno = #{bno} 
- </select>
 
- <update id="update">
- update tbl_board set title =#{title}, content =#{content} 
- where bno = #{bno}
- </update>
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+		select bno, title, content, writer, regdate
+		from tbl_board
+		where bno = #{bno}
+	</select>
 
- <delete id="delete">
- delete from tbl_board where bno = #{bno}
- </delete>
-    
- <select id="listAll" resultType="org.zerock.domain.BoardVO">
+	<update id="update">
+		update tbl_board set title =#{title}, content =#{content}
+		where bno = #{bno}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+
+	<select id="listAll" resultType="org.zerock.domain.BoardVO">
 	 <![CDATA[
 	 select 
 	   bno, title, content, writer, regdate
 	 from 
 	   tbl_board 
-	 ]]>  
- </select>    
- 
- <select id="listPage" resultType="org.zerock.domain.BoardVO">
+	 ]]>
+	</select>
+
+	<select id="listPage" resultType="org.zerock.domain.BoardVO">
 	<![CDATA[
 	select 
 	  bno, title, content, writer, regdate 
@@ -46,10 +46,10 @@ where bno = #{bno}
 	and rownum <= 10
 	order by bno desc regdate desc
 	]]>
-</select>
-	  
+	</select>
 
-<select id="countPaging" resultType="int">
+
+	<select id="countPaging" resultType="int">
 	 <![CDATA[
 	select 
 	   count(bno) 
@@ -60,68 +60,79 @@ where bno = #{bno}
 	 ]]>
 	</select>
 
-<!--  조회-->
-<select id="listSearch" resultType="org.zerock.domain.BoardVO">
+	<!-- 조회 -->
+	<select id="listSearch" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[  
 		  select bno, title, content, writer, regdate
 		  from tbl_board 
 		  where bno > 0 
-		]]>  
-	
+		]]>
+
 		<include refid="search"></include>
 	  
 		<![CDATA[    
 		  order by bno desc
-		]]>  
+		]]>
 	</select>
-	  
-	  <!--  페이징 카운트 조회 -->
+
+	<!-- 페이징 카운트 조회 -->
 	<select id="listSearchCount" resultType="int">
 		<![CDATA[  
 		  select count(bno)  
 		  from tbl_board 
 		  where bno > 0 
 		]]>
-		
-	  	<include refid="search"></include>
-	 
-	</select>  
- 
-	<sql id="search">
-	 <if test="searchType != null" > 
-	   <if test="searchType == 't'.toString()">
-	     and title like '%' || #{keyword} || '%'
-	   </if>
-	   <if test="searchType == 'c'.toString()">
-	     and content like '%' || #{keyword} || '%'
-	   </if>
-	   <if test="searchType == 'w'.toString()">
-	     and writer like '%' || #{keyword} || '%'
-	   </if>     
-	   <if test="searchType == 'tc'.toString()">
-	     and ( title like '%' ||  #{keyword} || '%'  
-	     OR content like '%' ||  #{keyword} || '%')
-	   </if>        
-	   <if test="searchType == 'cw'.toString()">
-	     and ( content like '%' ||  #{keyword} || '%'
-	     OR writer like '%' ||  #{keyword}|| '%')
-	   </if>        
-	   <if test="searchType == 'tcw'.toString()">
-	     and (   title like '%' ||  #{keyword} || '%'
-	           OR 
-	             content like '%' ||  #{keyword} || '%'
-	           OR 
-	             writer like '%' ||  #{keyword} || '%')
-	   </if>              
-	 </if>  
-	</sql>
-	
-	<insert id="addAttach">
-		insert into tbl_attach(full_name, bno) 
-						values (#{fullName}, 시퀀스명.currval)
-	</insert> 
 
-  
-  
-  
+		<include refid="search"></include>
+
+	</select>
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and title like '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and content like '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				and writer like '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				and ( title like '%' || #{keyword} || '%'
+				OR content like '%' || #{keyword} || '%')
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and ( content like '%' || #{keyword} || '%'
+				OR writer like '%' || #{keyword}|| '%')
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				and ( title like '%' || #{keyword} || '%'
+				OR
+				content like '%' || #{keyword} || '%'
+				OR
+				writer like '%' || #{keyword} || '%')
+			</if>
+		</if>
+	</sql>
+
+	<insert id="addAttach">
+		insert into tbl_attach(fullname, bno)
+		values (#{fullName}, seq_bno.currval)
+	</insert>
+
+
+	<select id="getAttach" resultType="string">
+		select fullname from tbl_attach where bno = #{bno} order by regdate
+	</select>
+
+	<delete id="deleteAttach">
+		delete from tbl_attach where bno = #{bno}
+	</delete>
+
+	<insert id="replaceAttach">
+		insert into tbl_attach(fullname, bno) values (#{fullName}, #{bno})
+	</insert>
+
+
 </mapper>

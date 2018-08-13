@@ -89,7 +89,6 @@ public class BoardController {
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
-		logger.info("삭제처리, bno = " + bno);
 
 		return "redirect:/board/listAll";
 	}
@@ -108,7 +107,6 @@ public class BoardController {
 	    rttr.addAttribute("perPageNum", cri.getPerPageNum());
 	    rttr.addFlashAttribute("msg", "SUCCESS");		
 		
-		logger.info("삭제처리, bno = " + bno);
 
 		return "redirect:/board/listPage";
 	}
@@ -116,14 +114,12 @@ public class BoardController {
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public void updateGET(@RequestParam("bno") int bno, Model model) throws Exception {
-		logger.info("수정페이지로 이동, update get called.../ bno = " + bno);
 		model.addAttribute(service.read(bno));
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String updatePOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
-		logger.info("수정처리, update post BoardVO = " + board.toString());
 
 		service.update(board);
 		rttr.addFlashAttribute("msg", "SUCCESS");
@@ -136,7 +132,6 @@ public class BoardController {
 	public void updatePageGET(@RequestParam("bno") int bno, 
 							    @ModelAttribute("cri") Criteria cri, 
 							    Model model) throws Exception {
-		logger.info("수정페이지로 이동, updatePage get called.../ bno = " + bno + " / cri = " + cri.toString());
 		model.addAttribute(service.read(bno));
 	}
 	
@@ -145,7 +140,6 @@ public class BoardController {
 	public String updatePagePOST(BoardVO board, 
 					  			Criteria cri, 
 					  			RedirectAttributes rttr) throws Exception {
-	  logger.info("수정처리, updatePage post called.../ board = " + board.toString() + " / cri = " + cri.toString());
 	  service.update(board);
 	  rttr.addAttribute("page", cri.getPage());
 	  rttr.addAttribute("perPageNum", cri.getPerPageNum());

@@ -43,10 +43,26 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void update(BoardVO board) throws Exception {
 		dao.update(board);
+
+		//...608p.
+		Integer bno = board.getBno();
+
+		dao.deleteAttach(bno);
+
+		String[] files = board.getFiles();
+		
+
+		if(files == null) { return; } 
+
+		for (String fileName : files) {			
+			dao.replaceAttach(fileName, bno);
+} 
 	}
 
+	@Transactional
 	@Override
 	public void remove(Integer bno) throws Exception {
+		dao.deleteAttach(bno);
 		dao.remove(bno);
 	}
 
@@ -79,4 +95,12 @@ public class BoardServiceImpl implements BoardService {
 	public int listSearchCount(SearchCriteria cri) throws Exception {
 		return dao.listSearchCount(cri);
 	}
+
+	@Override
+	public List<String> getAttach(Integer bno) throws Exception {
+		return dao.getAttach(bno);
+	}
+ 
+	
+	
 }
