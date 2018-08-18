@@ -47,30 +47,36 @@
 
 	<context:component-scan
 		base-package="org.zerock.service"></context:component-scan>
+ 
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<!-- 트랜젝션 매니저 설정 추가 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="select*" rollback-for="Exception"/>
-			<tx:method name="insert*" rollback-for="Exception"/>
-			<tx:method name="update*" rollback-for="Exception"/>
-			<tx:method name="delete*" rollback-for="Exception"/>
+			<tx:method name="select*" rollback-for="Exception" />
+			<tx:method name="insert*" rollback-for="Exception" />
+			<tx:method name="update*" rollback-for="Exception" />
+			<tx:method name="delete*" rollback-for="Exception" />
 		</tx:attributes>
 	</tx:advice>
-	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
 
-		<!-- aop 추가 -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- aop 추가 -->
 	<aop:config proxy-target-class="true">
-		<aop:pointcut expression="execution(* org.zerock..*ServiceImpl.*(..))" id="serviceMethod"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"
-					id="transactionAdvisor"/>
-					
+		<aop:pointcut
+			expression="execution(* org.zerock..*ServiceImpl.*(..))"
+			id="serviceMethod" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="serviceMethod" id="transactionAdvisor" />
+
 	</aop:config>
- 
+
 
 </beans>
