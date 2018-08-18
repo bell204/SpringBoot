@@ -19,8 +19,11 @@ public class UserController {
 	@Inject
 	private UserService service;
 
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void loginGET(@ModelAttribute("dto") LoginDTO dto) {
+	
 	}
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)

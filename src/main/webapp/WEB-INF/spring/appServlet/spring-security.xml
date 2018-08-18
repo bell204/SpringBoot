@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+	<http auto-config='true' use-expressions="true"> <!-- 로그인 페이지, http 기본 인증, 로그아웃 기능 -->
+		<intercept-url pattern="/login" access="permitAll" /> <!-- 로그인은 모두 허용 -->
+		<intercept-url pattern="/resources/**"
+			access="permitAll" /> <!-- 리소스 허용 -->
+		<intercept-url pattern="/**"
+			access="hasRole('ROLE_USER')" /> <!-- ROLE_USER만 허용 -->
+
+
+		<!--직접 만든 로그인 페이지를 스프링에게 알려줌. -->
+		<!-- 로그인 성공하면 이동할 페이지가 default-target-url임 -->
+		<form-login login-page="/login"
+			default-target-url="/monitering" username-parameter="username"
+			password-parameter="password"
+			authentication-failure-url="/login?error"
+			always-use-default-target='true' />
+		<!-- always-use-default-target='true'이거 안하면 로그인 성공해도/monitering으로 안 가짐 -->
+
+		<logout invalidate-session="true" logout-url="/logout"
+			logout-success-url="/login?logout" />
+
+
+		<csrf /> <!-- csrf 설정 -->
+
+
+	</http>
+
+	<authentication-manager> <!-- 인증 처리를 위한 최상위 태그 -->
+		<authentication-provider>
+			<user-service>
+				<user name="user00" password="user00" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+
+
+
+
+</beans:beans>
