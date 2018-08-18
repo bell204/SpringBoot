@@ -10,15 +10,16 @@ import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.SearchCriteria;
 import org.zerock.persistence.BoardDAO;
-
+ 
 @Service
 public class BoardServiceImpl implements BoardService {
-
+ 
+	
 	@Inject
 	private BoardDAO dao;
  
-	@Transactional
 	@Override
+	@Transactional
 	public void regist(BoardVO board) throws Exception {
 		
 		// 게시물 등록
@@ -36,8 +37,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public BoardVO read(Integer bno) throws Exception {
 		return dao.read(bno);
+		
 	}
 
 	@Override
