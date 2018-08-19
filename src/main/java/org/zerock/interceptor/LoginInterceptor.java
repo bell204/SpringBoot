@@ -1,5 +1,6 @@
 package org.zerock.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,11 +27,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		ModelMap modelMap = modelAndView.getModelMap();
 		Object userVO = modelMap.get("userVO");
 
+		
+		
 		if(userVO != null){
 			
 			logger.info(" new login success!!!!!");
 			session.setAttribute(LOGIN, userVO);
 			//response.sendRedirect("/");		
+			
+			   if (request.getParameter("useCookie") != null) {
+
+			        logger.info("remember me................");
+			        
+			        Cookie loginCookie = new Cookie("loginCookie", session.getId());			        
+			        loginCookie.setPath("/");  			        
+			        loginCookie.setMaxAge(60 * 60 * 24 * 7);		        
+			        response.addCookie(loginCookie);
+			      }
 			
 			Object dest = session.getAttribute("dest");
 			response.sendRedirect(dest != null ? (String)dest:"/");

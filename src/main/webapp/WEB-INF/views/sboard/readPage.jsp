@@ -69,8 +69,10 @@
 
 
  <div class="box-footer">
+  <c:if test="${login.userid == boardVO.writer}"> 
    <button type="submit" class="btn btn-warning" id="modifyBtn">Modify</button>
    <button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
+   </c:if> 
    <button type="submit" class="btn btn-primary" id="goListBtn">GO LIST </button>
  </div>
 
